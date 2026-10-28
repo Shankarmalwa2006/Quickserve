@@ -22,6 +22,12 @@ import {
   Phone,
   CalendarCheck,
   ChevronRight,
+  UserRound,
+  Eye,
+  EyeOff,
+  Mail,
+  LockKeyhole,
+  BriefcaseBusiness,
 } from "lucide-react";
 
 import "./App.css";
@@ -132,6 +138,13 @@ function App() {
   const [location, setLocation] = useState("");
   const [selectedService, setSelectedService] = useState(null);
   const [bookingMessage, setBookingMessage] = useState("");
+  
+  // Authentication modal state
+  const [authOpen, setAuthOpen] = useState(false);
+  const [authMode, setAuthMode] = useState("login");
+  const [authRole, setAuthRole] = useState("customer");
+  const [showPassword, setShowPassword] = useState(false);
+  const [authMessage, setAuthMessage] = useState("");
 
   useEffect(() => {
     document.documentElement.setAttribute("data-theme", theme);
@@ -147,6 +160,33 @@ function App() {
     setTheme((current) => (current === "light" ? "dark" : "light"));
   };
 
+  // Open authentication modal
+const openAuth = (mode = "login", role = "customer") => {
+  setAuthMode(mode);
+  setAuthRole(role);
+  setAuthMessage("");
+  setShowPassword(false);
+  setAuthOpen(true);
+  setMobileMenuOpen(false);
+};
+
+// Close authentication modal
+const closeAuth = () => {
+  setAuthOpen(false);
+  setAuthMessage("");
+  setShowPassword(false);
+};
+
+// Handle login/signup form submission
+const handleAuthSubmit = (event) => {
+  event.preventDefault();
+
+  setAuthMessage(
+    authMode === "signup"
+      ? "Your form is valid! Connect the backend to create your account."
+      : "Form submitted! Connect the backend to verify your login."
+  );
+};
   const filteredServices = useMemo(() => {
     const query = searchQuery.trim().toLowerCase();
 
@@ -258,6 +298,33 @@ function App() {
           <a href="#services" className="button button-primary nav-book">
             Book a Service
           </a>
+                    {/* AUTH BUTTONS */}
+          <div className="auth-nav-actions">
+            <button
+              type="button"
+              className="auth-nav-login"
+              onClick={() => openAuth("login", "customer")}
+            >
+              Login
+            </button>
+
+            <button
+              type="button"
+              className="auth-nav-signup"
+              onClick={() => openAuth("signup", "customer")}
+            >
+              Sign Up
+            </button>
+
+            <button
+              type="button"
+              className="auth-provider-link"
+              onClick={() => openAuth("signup", "provider")}
+            >
+              <BriefcaseBusiness size={16} />
+              <span>Become a Provider</span>
+            </button>
+          </div>
 
           <button
             type="button"
@@ -919,6 +986,227 @@ function App() {
               </p>
             </form>
           </div>
+        </div>
+      )}
+            {/* AUTHENTICATION MODAL */}
+      {authOpen && (
+        <div
+          className="auth-backdrop"
+          onMouseDown={(event) => {
+            if (event.target === event.currentTarget) {
+              closeAuth();
+            }
+          }}
+        >
+          <section className="auth-modal" role="dialog" aria-modal="true">
+            <button
+              type="button"
+              className="auth-close"
+              onClick={closeAuth}
+              aria-label="Close modal"
+            >
+              <X size={21} />
+            </button>
+
+            <div className="auth-brand-mark">
+              <Wrench size={25} />
+            </div>
+
+            <span className="auth-eyebrow">WELCOME TO QUICKSERVE</span>
+
+            <h2>
+              {authMode === "login"
+                ? "Welcome back."
+                : "Let's get you started."}
+            </h2>
+
+            <p className="auth-subtitle">
+              {authMode === "login"
+                ? "Sign in to continue your QuickServe journey."
+                : "Create your account and make life easier."}
+            </p>
+
+            <div className="auth-role-selector">
+              <button
+                type="button"
+                className={
+                  authRole === "customer"
+                    ? "auth-role-option active"
+                    : "auth-role-option"
+                }
+                onClick={() => {
+                  setAuthRole("customer");
+                  setAuthMessage("");
+                }}
+              >
+                <UserRound size={18} />
+                Customer
+              </button>
+
+              <button
+                type="button"
+                className={
+                  authRole === "provider"
+                    ? "auth-role-option active"
+                    : "auth-role-option"
+                }
+                onClick={() => {
+                  setAuthRole("provider");
+                  setAuthMessage("");
+                }}
+              >
+                <BriefcaseBusiness size={18} />
+                Provider
+              </button>
+            </div>
+
+            <form className="auth-form" onSubmit={handleAuthSubmit}>
+              {authMode === "signup" && (
+                <label className="auth-field">
+                  Full Name
+                  <div className="auth-input-wrap">
+                    <UserRound size={18} />
+                    <input
+                      type="text"
+                      name="fullName"
+                      placeholder="Enter your full name"
+                      autoComplete="name"
+                      required
+                    />
+                  </div>
+                </label>
+              )}
+
+              {authMode === "signup" && authRole === "provider" && (
+                <label className="auth-field">
+                  Business Name
+                  <div className="auth-input-wrap">
+                    <BriefcaseBusiness size={18} />
+                    <input
+                      type="text"
+                      name="businessName"
+                      placeholder="Enter your business name"
+                      required
+                    />
+                  </div>
+                </label>
+              )}
+
+              <label className="auth-field">
+                Email Address
+                <div className="auth-input-wrap">
+                  <Mail size={18} />
+                  <input
+                    type="email"
+                    name="email"
+                    placeholder="you@example.com"
+                    autoComplete="email"
+                    required
+                  />
+                </div>
+              </label>
+
+              {authMode === "signup" && (
+                <label className="auth-field">
+                  Phone Number
+                  <div className="auth-input-wrap">
+                    <Phone size={18} />
+                    <input
+                      type="tel"
+                      name="phone"
+                      placeholder="10-digit mobile number"
+                      pattern="[0-9]{10}"
+                      title="Enter a 10-digit phone number"
+                      autoComplete="tel"
+                      required
+                    />
+                  </div>
+                </label>
+              )}
+
+              <label className="auth-field">
+                Password
+                <div className="auth-input-wrap">
+                  <LockKeyhole size={18} />
+                  <input
+                    type={showPassword ? "text" : "password"}
+                    name="password"
+                    placeholder="Enter your password"
+                    autoComplete={
+                      authMode === "signup"
+                        ? "new-password"
+                        : "current-password"
+                    }
+                    minLength={8}
+                    required
+                  />
+
+                  <button
+                    type="button"
+                    className="auth-password-toggle"
+                    onClick={() =>
+                      setShowPassword((visible) => !visible)
+                    }
+                    aria-label={
+                      showPassword ? "Hide password" : "Show password"
+                    }
+                  >
+                    {showPassword ? (
+                      <EyeOff size={18} />
+                    ) : (
+                      <Eye size={18} />
+                    )}
+                  </button>
+                </div>
+              </label>
+
+              {authMessage && (
+                <div className="auth-message" role="status">
+                  <CheckCircle2 size={18} />
+                  <span>{authMessage}</span>
+                </div>
+              )}
+
+              <button type="submit" className="auth-submit-button">
+                {authMode === "login" ? "Sign In" : "Create Account"}
+                <ArrowRight size={18} />
+              </button>
+
+              <p className="auth-demo-note">
+                Demo interface · Backend authentication is not connected.
+              </p>
+            </form>
+
+            <div className="auth-switch">
+              {authMode === "login" ? (
+                <>
+                  New to QuickServe?{" "}
+                  <button
+                    type="button"
+                    onClick={() => {
+                      setAuthMode("signup");
+                      setAuthMessage("");
+                    }}
+                  >
+                    Create an account
+                  </button>
+                </>
+              ) : (
+                <>
+                  Already have an account?{" "}
+                  <button
+                    type="button"
+                    onClick={() => {
+                      setAuthMode("login");
+                      setAuthMessage("");
+                    }}
+                  >
+                    Sign in
+                  </button>
+                </>
+              )}
+            </div>
+          </section>
         </div>
       )}
     </div>
