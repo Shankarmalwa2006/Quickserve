@@ -231,24 +231,84 @@ const handleAuthSubmit = (event) => {
   };
 
   const handleLocation = () => {
-    if (!navigator.geolocation) {
-      setLocation("Location is not supported by this browser.");
-      return;
-    }
+  if (!navigator.geolocation) {
+    setLocation("Location is not supported by this browser.");
+    return;
+  }
 
-    setLocation("Detecting location...");
+  setLocation("Detecting your location...");
 
-    navigator.geolocation.getCurrentPosition(
-      (position) => {
-        setLocation(
-          `${position.coords.latitude.toFixed(4)}, ${position.coords.longitude.toFixed(4)}`
+  navigator.geolocation.getCurrentPosition(
+    async (position) => {
+      const { latitude, longitude } = position.coords;
+
+      try {
+        const response = await fetch(
+          `https://nominatim.openstreetmap.org/reverse?format=jsonv2&lat=${latitude}&lon=${longitude}`
         );
-      },
-      () => {
-        setLocation("Location unavailable. Please enter it manually.");
+
+        if (!response.ok) {
+          throw new Error("Unable to fetch address");
+        }
+
+        const data = await response.json();
+        const address = data.address || {};
+
+        const area =
+          address.suburb ||
+          address.neighbourhood ||
+          address.residential ||
+          address.city_district ||
+          address.town ||
+          address.village;
+
+        const city =
+          address.city ||
+          address.town ||
+          address.municipality ||
+          address.village;
+
+        const readableLocation = [area, city]
+          .filter(Boolean)
+          .filter((value, index, array) => array.indexOf(value) === index)
+          .join(", ");
+
+        setLocation(
+          readableLocation ||
+            data.display_name ||
+            `${latitude.toFixed(4)}, ${longitude.toFixed(4)}`
+        );
+
+        setActiveCategory("All Services");
+        setSearchQuery("");
+
+        setTimeout(() => {
+          document.getElementById("services")?.scrollIntoView({
+            behavior: "smooth",
+          });
+        }, 100);
+      } catch (error) {
+        console.error("Reverse geocoding failed:", error);
+
+        setLocation(
+          `${latitude.toFixed(4)}, ${longitude.toFixed(4)}`
+        );
+
+        setActiveCategory("All Services");
+        setSearchQuery("");
       }
-    );
-  };
+    },
+    () => {
+      setLocation("Location unavailable. Please enter it manually.");
+    },
+    {
+      enableHighAccuracy: true,
+      timeout: 10000,
+      maximumAge: 60000,
+    }
+  );
+};
+
 
   return (
     <div className="app-shell">
