@@ -3053,3 +3053,23 @@ svg {
     transition-duration: 0.01ms !important;
   }
 }
+
+.service-results-heading {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin: 28px 0 22px;
+}
+
+.service-results-heading h3 {
+  font-size: 1.5rem;
+  font-weight: 700;
+  margin: 0 0 8px;
+  color: var(--text-primary, #ffffff);
+}
+
+.service-results-heading p {
+  margin: 0;
+  font-size: 0.95rem;
+  color: var(--text-secondary, #a1a1aa);
+}

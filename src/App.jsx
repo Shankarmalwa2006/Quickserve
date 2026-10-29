@@ -55,6 +55,7 @@ const initialServices = [
     icon: Droplets,
     color: "blue",
     popular: true,
+    availableAreas: ["Andheri", "Bandra", "Borivali"],
   },
   {
     id: 2,
@@ -68,6 +69,7 @@ const initialServices = [
     icon: Zap,
     color: "yellow",
     popular: true,
+    availableAreas: ["Andheri", "Dadar", "Thane"],
   },
   {
     id: 3,
@@ -81,6 +83,7 @@ const initialServices = [
     icon: Sparkles,
     color: "purple",
     popular: true,
+    availableAreas:["Bandra", "Andheri", "Powai"]
   },
   {
     id: 4,
@@ -94,6 +97,7 @@ const initialServices = [
     icon: Wind,
     color: "cyan",
     popular: false,
+    availableAreas:["Thane", "Powai", "Andheri"]
   },
   {
     id: 5,
@@ -107,6 +111,7 @@ const initialServices = [
     icon: Hammer,
     color: "orange",
     popular: false,
+    availableAreas:["Borivali", "Dadar", "Bandra"]
   },
   {
     id: 6,
@@ -120,6 +125,7 @@ const initialServices = [
     icon: Paintbrush,
     color: "pink",
     popular: false,
+    availableAreas:	["Powai", "Thane", "Bandra"]
   },
 ];
 
@@ -187,23 +193,32 @@ const handleAuthSubmit = (event) => {
       : "Form submitted! Connect the backend to verify your login."
   );
 };
-  const filteredServices = useMemo(() => {
-    const query = searchQuery.trim().toLowerCase();
+const filteredServices = useMemo(() => {
+  const query = searchQuery.trim().toLowerCase();
+  const currentLocation = location.trim().toLowerCase();
 
-    return initialServices.filter((service) => {
-      const matchesCategory =
-        activeCategory === "All Services" ||
-        service.category === activeCategory;
+  return initialServices.filter((service) => {
+    const matchesCategory =
+      activeCategory === "All Services" ||
+      service.category === activeCategory;
 
-      const matchesSearch =
-        !query ||
-        service.name.toLowerCase().includes(query) ||
-        service.category.toLowerCase().includes(query) ||
-        service.description.toLowerCase().includes(query);
+    const matchesSearch =
+      !query ||
+      service.name.toLowerCase().includes(query) ||
+      service.category.toLowerCase().includes(query) ||
+      service.description.toLowerCase().includes(query);
 
-      return matchesCategory && matchesSearch;
-    });
-  }, [activeCategory, searchQuery]);
+    const serviceAreas = service.availableAreas || [];
+
+    const matchesLocation =
+      !currentLocation ||
+      serviceAreas.some((area) =>
+        currentLocation.includes(area.toLowerCase())
+      );
+
+    return matchesCategory && matchesSearch && matchesLocation;
+  });
+}, [activeCategory, searchQuery, location]);
 
   const handleSearch = (event) => {
     event.preventDefault();
@@ -647,6 +662,21 @@ const handleAuthSubmit = (event) => {
                 {category.name}
               </button>
             ))}
+          </div>
+            
+                <div className="service-results-heading">
+          <div>
+          <h3>
+          {location.trim()
+            ? `Services available in ${location}`
+            : "Explore Our Services"}
+          </h3>
+
+          <p>
+          {filteredServices.length} services found
+          {location.trim() ? ` in ${location}` : ""}
+          </p>
+          </div>
           </div>
 
           {filteredServices.length > 0 ? (
