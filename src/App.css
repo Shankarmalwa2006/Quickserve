@@ -3073,3 +3073,175 @@ svg {
   font-size: 0.95rem;
   color: var(--text-secondary, #a1a1aa);
 }
+
+/* ===== PROVIDER PROFILE - CLEAN UI ===== */
+
+.provider-profile {
+  margin: 24px 0;
+  padding: 20px;
+  border: 1px solid var(--border-color, #e5e7eb);
+  border-radius: 18px;
+  background: var(--card-bg, #ffffff);
+}
+
+.provider-profile-header {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  flex-wrap: wrap;
+}
+
+.provider-avatar {
+  width: 52px;
+  height: 52px;
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 15px;
+  background: #ede9fe;
+  color: #6d4aff;
+}
+
+.provider-profile-header > div:nth-child(2) {
+  flex: 1;
+  min-width: 140px;
+}
+
+.provider-profile-header h3 {
+  margin: 0 0 5px;
+  font-size: 16px;
+  font-weight: 700;
+  line-height: 1.4;
+}
+
+.provider-profile-header p {
+  margin: 0;
+  font-size: 13px;
+  line-height: 1.5;
+  color: var(--muted-text, #6b7280);
+  overflow-wrap: anywhere;
+}
+
+.provider-verified {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  padding: 6px 9px;
+  border-radius: 20px;
+  background: #ecfdf5;
+  color: #047857;
+  font-size: 11px;
+  font-weight: 700;
+}
+
+.provider-stats {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 12px;
+  margin-top: 20px;
+  padding-top: 18px;
+  border-top: 1px solid var(--border-color, #e5e7eb);
+}
+
+.provider-stats > div {
+  display: flex;
+  flex-direction: column;
+  gap: 7px;
+  min-width: 0;
+}
+
+.provider-stats strong {
+  font-size: 15px;
+  line-height: 1.4;
+  overflow-wrap: anywhere;
+}
+
+.provider-stats span {
+  font-size: 12px;
+  color: var(--muted-text, #6b7280);
+}
+
+.provider-service-areas {
+  margin-top: 22px;
+}
+
+.provider-service-areas h4 {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 12px;
+}
+
+.provider-area-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.provider-area-tags span {
+  padding: 7px 11px;
+  border-radius: 20px;
+  background: var(--tag-bg, #f3f4f6);
+  font-size: 12px;
+  line-height: 1.4;
+}
+
+@media (max-width: 480px) {
+  .provider-profile {
+    padding: 15px;
+    margin: 18px 0;
+  }
+
+  .provider-profile-header {
+    gap: 10px;
+  }
+
+  .provider-verified {
+    margin-left: 62px;
+  }
+
+  .provider-stats {
+    gap: 8px;
+  }
+}
+/* ===== QUICK SERVE PROVIDER CARD TEXT FIX ===== */
+
+/* Keep provider profile card white and text dark in both themes */
+.provider-profile {
+  background: #ffffff;
+  color: #171725;
+  border-color: #e5e7eb;
+}
+
+.provider-profile .provider-profile-header h3,
+.provider-profile .provider-stats strong {
+  color: #171725 !important;
+}
+
+.provider-profile .provider-profile-header p,
+.provider-profile .provider-stats span {
+  color: #647084 !important;
+}
+
+.provider-profile .provider-stats {
+  border-top-color: #e5e7eb;
+}
+
+/* Service area tags remain readable in dark mode */
+.provider-area-tags span {
+  background: #f3f4f6;
+  color: #252538 !important;
+}
+
+/* Dark mode: service area heading and icons */
+.dark .provider-service-areas h4,
+.dark .provider-service-areas h4 svg {
+  color: #f3f4f6;
+}
+
+/* Keep verification badge readable */
+.provider-profile .provider-verified {
+  background: #ecfdf5;
+  color: #047857;
+}
