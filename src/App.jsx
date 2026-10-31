@@ -33,112 +33,12 @@
   import "./App.css";
   import Navbar from "./Components/Navbar.jsx";
   import Home from "./pages/Home.jsx";
+  import { Routes, Route } from "react-router-dom";
+  import Services from "./pages/Services.jsx";
+  import { categories, initialServices } from "./data/serviceData.js";
 
-  const categories = [
-    { name: "All Services", icon: Sparkles },
-    { name: "Plumbing", icon: Droplets },
-    { name: "Electrical", icon: Zap },
-    { name: "Cleaning", icon: Sparkles },
-    { name: "AC Repair", icon: Wind },
-    { name: "Carpentry", icon: Hammer },
-    { name: "Painting", icon: Paintbrush },
-  ];
-
-  const initialServices = [
-    {
-      id: 1,
-      name: "Professional Plumbing",
-      category: "Plumbing",
-      description: "Leak repairs, tap installation and pipe maintenance.",
-      price: 299,
-      rating: 4.9,
-      reviews: 128,
-      duration: "30–60 min",
-      icon: Droplets,
-      color: "blue",
-      popular: true,
-      availableAreas: ["Andheri" , "Bandra", "Borivali"],
-
-      provider: {
-      name: "Rahul Sharma",
-      businessName: "Rahul Plumbing Services",
-      experience: "5+ years",
-      completedJobs: 250,
-      verified: true,
-        },
-    },
-    {
-      id: 2,
-      name: "Electrical Repairs",
-      category: "Electrical",
-      description: "Safe electrical repairs, wiring and installations.",
-      price: 349,
-      rating: 4.8,
-      reviews: 96,
-      duration: "30–60 min",
-      icon: Zap,
-      color: "yellow",
-      popular: true,
-      availableAreas: ["Andheri", "Dadar", "Thane"],
-    },
-    {
-      id: 3,
-      name: "Home Deep Cleaning",
-      category: "Cleaning",
-      description: "Detailed cleaning for a fresh and spotless home.",
-      price: 799,
-      rating: 4.9,
-      reviews: 214,
-      duration: "2–3 hours",
-      icon: Sparkles,
-      color: "purple",
-      popular: true,
-      availableAreas:["Bandra", "Andheri", "Powai"]
-    },
-    {
-      id: 4,
-      name: "AC Repair & Service",
-      category: "AC Repair",
-      description: "AC servicing, troubleshooting and maintenance.",
-      price: 499,
-      rating: 4.7,
-      reviews: 87,
-      duration: "45–90 min",
-      icon: Wind,
-      color: "cyan",
-      popular: false,
-      availableAreas:["Thane", "Powai", "Andheri"]
-    },
-    {
-      id: 5,
-      name: "Carpentry Services",
-      category: "Carpentry",
-      description: "Furniture assembly, door repairs and fittings.",
-      price: 399,
-      rating: 4.8,
-      reviews: 73,
-      duration: "30–90 min",
-      icon: Hammer,
-      color: "orange",
-      popular: false,
-      availableAreas:["Borivali", "Dadar", "Bandra"]
-    },
-    {
-      id: 6,
-      name: "Home Painting",
-      category: "Painting",
-      description: "Professional painting and wall touch-ups.",
-      price: 999,
-      rating: 4.8,
-      reviews: 64,
-      duration: "Depends on work",
-      icon: Paintbrush,
-      color: "pink",
-      popular: false,
-      availableAreas:	["Powai", "Thane", "Bandra"]
-    },
-  ];
-
+ 
+  
   function App() {
     const [theme, setTheme] = useState(() => {
       try {
@@ -474,21 +374,32 @@ const handleLogout = () => {
           handleLogout={handleLogout}
         />
 
-        <Home
-          searchQuery={searchQuery}
-          setSearchQuery={setSearchQuery}
-          location={location}
-          setLocation={setLocation}
-          handleLocation={handleLocation}
-          handleSearch={handleSearch}
-          categories={categories}
-          activeCategory={activeCategory}
-          setActiveCategory={setActiveCategory}
-          filteredServices={filteredServices}
-          openProviderDetails={openProviderDetails}
-          handleBooking={lp}
-        />
+                <Routes>
+          <Route
+            path="/"
+            element={
+              <Home
+                searchQuery={searchQuery}
+                setSearchQuery={setSearchQuery}
+                location={location}
+                setLocation={setLocation}
+                handleLocation={handleLocation}
+                handleSearch={handleSearch}
+                categories={categories}
+                activeCategory={activeCategory}
+                setActiveCategory={setActiveCategory}
+                filteredServices={filteredServices}
+                openProviderDetails={openProviderDetails}
+                handleBooking={lp}
+              />
+            }
+          />
 
+              <Route
+            path="/services"
+            element={<Services onBook={lp} />}
+            />
+          </Routes>
         {/* PROVIDER DETAILS MODAL */}
           {selectedProvider && (
           <div

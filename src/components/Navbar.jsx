@@ -1,3 +1,4 @@
+import { NavLink, Link } from "react-router-dom";
 import {
   Wrench,
   Sun,
@@ -18,12 +19,12 @@ function Navbar({
 }) {
   return (
     <header className="navbar">
-      <a
-        href="#home"
+            <NavLink
+        to="/"
         className="brand"
         aria-label="QuickServe home"
         onClick={() => setMobileMenuOpen(false)}
-      >
+        >
         <span className="brand-icon">
           <Wrench size={23} strokeWidth={2.5} />
         </span>
@@ -31,25 +32,24 @@ function Navbar({
         <span className="brand-name">
           Quick<span>Serve</span>
         </span>
-      </a>
+        </NavLink>
+        <nav className={`nav-links ${mobileMenuOpen ? "nav-open" : ""}`}>
+      <NavLink to="/" onClick={() => setMobileMenuOpen(false)}>
+        Home
+      </NavLink>
 
-      <nav className={`nav-links ${mobileMenuOpen ? "nav-open" : ""}`}>
-        <a href="#home" onClick={() => setMobileMenuOpen(false)}>
-          Home
-        </a>
+      <NavLink to="/services" onClick={() => setMobileMenuOpen(false)}>
+        Explore
+      </NavLink>
 
-        <a href="#services" onClick={() => setMobileMenuOpen(false)}>
-          Services
-        </a>
+      <Link to="/#how-it-works" onClick={() => setMobileMenuOpen(false)}>
+        How It Works
+      </Link>
 
-        <a href="#how-it-works" onClick={() => setMobileMenuOpen(false)}>
-          How It Works
-        </a>
-
-        <a href="#about" onClick={() => setMobileMenuOpen(false)}>
-          About
-        </a>
-      </nav>
+      <Link to="/#about" onClick={() => setMobileMenuOpen(false)}>
+        About
+      </Link>
+    </nav>
 
       <div className="nav-actions">
         <button
@@ -68,9 +68,9 @@ function Navbar({
           <span>{theme === "light" ? "Dark" : "Light"}</span>
         </button>
 
-        <a href="#services" className="button button-primary nav-book">
+          <Link to="/services" className="button button-primary nav-book">
           Book a Service
-        </a>
+          </Link>
 
         <div className="auth-nav-actions">
         {user ? (
