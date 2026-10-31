@@ -13,6 +13,8 @@ function Navbar({
   mobileMenuOpen,
   setMobileMenuOpen,
   openAuth,
+  user,
+  handleLogout,
 }) {
   return (
     <header className="navbar">
@@ -71,43 +73,51 @@ function Navbar({
         </a>
 
         <div className="auth-nav-actions">
-          <button
-            type="button"
-            className="auth-nav-login"
-            onClick={() => openAuth("login", "customer")}
-          >
-            Login
-          </button>
+        {user ? (
+          <>
+            <span className="auth-nav-login">
+              Hi, {user.full_name.split(" ")[0]}
+            </span>
 
-          <button
-            type="button"
-            className="auth-nav-signup"
-            onClick={() => openAuth("signup", "customer")}
-          >
-            Sign Up
-          </button>
+            <button
+              type="button"
+              className="auth-nav-signup"
+              onClick={handleLogout}
+            >
+              Logout
+            </button>
+          </>
+        ) : (
+          <>
+            <button
+              type="button"
+              className="auth-nav-login"
+              onClick={() => openAuth("login", "customer")}
+            >
+              Login
+            </button>
 
-          <button
-            type="button"
-            className="auth-provider-link"
-            onClick={() => openAuth("signup", "provider")}
-          >
-            <BriefcaseBusiness size={16} />
-            <span>Become a Provider</span>
-          </button>
+            <button
+              type="button"
+              className="auth-nav-signup"
+              onClick={() => openAuth("signup", "customer")}
+            >
+              Sign Up
+            </button>
+
+            <button
+              type="button"
+              className="auth-provider-link"
+              onClick={() => openAuth("signup", "provider")}
+            >
+              <BriefcaseBusiness size={16} />
+              <span>Become a Provider</span>
+            </button>
+          </>
+        )}
         </div>
-
-        <button
-          type="button"
-          className="mobile-menu-button"
-          onClick={() => setMobileMenuOpen((open) => !open)}
-          aria-label={mobileMenuOpen ? "Close menu" : "Open menu"}
-        >
-          {mobileMenuOpen ? <X size={23} /> : <Menu size={23} />}
-        </button>
       </div>
     </header>
   );
 }
-
 export default Navbar;
