@@ -49,6 +49,8 @@ function Navbar({
       <Link to="/#about" onClick={() => setMobileMenuOpen(false)}>
         About
       </Link>
+
+      
     </nav>
 
       <div className="nav-actions">
@@ -78,6 +80,10 @@ function Navbar({
             <span className="auth-nav-login">
               Hi, {user.full_name.split(" ")[0]}
             </span>
+
+              <Link to="/my-bookings" className="my-bookings-link">
+  My Bookings
+</Link>
 
             <button
               type="button"

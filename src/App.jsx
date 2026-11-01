@@ -36,8 +36,11 @@
   import { Routes, Route } from "react-router-dom";
   import Services from "./pages/Services.jsx";
   import { categories, initialServices } from "./data/serviceData.js";
+  import MyBookings from "./pages/MyBookings.jsx";
+  import BookingHistory from "./pages/BookingHistory.jsx";
 
- 
+
+  
   
   function App() {
     const [theme, setTheme] = useState(() => {
@@ -255,8 +258,9 @@ const handleLogout = () => {
 
       const response = await fetch("http://localhost:5000/api/bookings", {
         method: "POST",
-        headers: {
-          "Content-Type": "application/json",
+          headers: {
+        "Content-Type": "application/json",
+        "Authorization": `Bearer ${localStorage.getItem("quickserve-token")}`,
         },
         body: JSON.stringify(bookingData),
       });
@@ -399,7 +403,15 @@ const handleLogout = () => {
             path="/services"
             element={<Services onBook={lp} />}
             />
+            <Route
+            path="/my-bookings"
+            element={<BookingHistory />}
+            />
+            <Route path="/history" element={<BookingHistory />} />
+
           </Routes>
+
+
         {/* PROVIDER DETAILS MODAL */}
           {selectedProvider && (
           <div

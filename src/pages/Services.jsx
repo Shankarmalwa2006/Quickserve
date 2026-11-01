@@ -4,7 +4,7 @@ import {
   categories,
   initialServices
 } from "../data/serviceData.js";
-import ServiceCard from "../Components/ServiceCard";
+import ServiceCard from "../Components/ServiceCard.jsx";
 
 function Services({ onBook }) {
   const [searchQuery, setSearchQuery] = useState("");
