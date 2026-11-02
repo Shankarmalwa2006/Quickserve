@@ -33,11 +33,13 @@
   import "./App.css";
   import Navbar from "./Components/Navbar.jsx";
   import Home from "./pages/Home.jsx";
-  import { Routes, Route } from "react-router-dom";
   import Services from "./pages/Services.jsx";
   import { categories, initialServices } from "./data/serviceData.js";
   import MyBookings from "./pages/MyBookings.jsx";
   import BookingHistory from "./pages/BookingHistory.jsx";
+   import { Routes, Route , Navigate} from "react-router-dom";
+  import ProviderDashboard from "./pages/provider/ProviderDashboard.jsx";
+    import { useNavigate } from "react-router-dom";
 
 
   
@@ -96,9 +98,13 @@
       }
     }, [theme]);
 
+    const navigate = useNavigate();
+
     const toggleTheme = () => {
       setTheme((current) => (current === "light" ? "dark" : "light"));
     };
+
+
 
     // Open authentication modal
   const openAuth = (mode = "login", role = "customer") => {
@@ -108,15 +114,18 @@
     setShowPassword(false);
     setAuthOpen(true);
     setMobileMenuOpen(false);
+
+
   };
 
-    // Handle user logout
-const handleLogout = () => {
+
+    const handleLogout = () => {
   localStorage.removeItem("quickserve-token");
   localStorage.removeItem("quickserve-user");
   setUser(null);
+  navigate("/", { replace: true });
+openAuth("login", "provider");
 };
-
   // Close authentication modal
   const closeAuth = () => {
     setAuthOpen(false);
@@ -367,16 +376,17 @@ const handleLogout = () => {
     return (
       <div className="app-shell">
         {/* NAVBAR */}
-              
-        <Navbar
-          theme={theme}
-          toggleTheme={toggleTheme}
-          mobileMenuOpen={mobileMenuOpen}
-          setMobileMenuOpen={setMobileMenuOpen}
-          openAuth={openAuth}
-          user={user}
-          handleLogout={handleLogout}
-        />
+        {!window.location.pathname.startsWith("/provider") && (
+          <Navbar
+            theme={theme}
+            toggleTheme={toggleTheme}
+            mobileMenuOpen={mobileMenuOpen}
+            setMobileMenuOpen={setMobileMenuOpen}
+            openAuth={openAuth}
+            user={user}
+            handleLogout={handleLogout}
+          />
+        )}
 
                 <Routes>
           <Route
@@ -408,6 +418,13 @@ const handleLogout = () => {
             element={<BookingHistory />}
             />
             <Route path="/history" element={<BookingHistory />} />
+
+            console.log("CURRENT PATH:", window.location.pathname);
+
+              <Route
+                path="/provider/dashboard"
+                element={<ProviderDashboard onLogout={handleLogout} />}
+              />
 
           </Routes>
 

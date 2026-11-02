@@ -81,9 +81,28 @@ function Navbar({
               Hi, {user.full_name.split(" ")[0]}
             </span>
 
-              <Link to="/my-bookings" className="my-bookings-link">
-  My Bookings
-</Link>
+                {user.role === "provider" ? (
+            <Link
+              to="/provider/dashboard"
+              className="my-bookings-link"
+            >
+              Provider Dashboard
+            </Link>
+          ) : user.role === "admin" ? (
+            <Link
+              to="/admin/dashboard"
+              className="my-bookings-link"
+            >
+              Admin Dashboard
+            </Link>
+          ) : (
+            <Link
+              to="/my-bookings"
+              className="my-bookings-link"
+            >
+              My Bookings
+            </Link>
+          )}
 
             <button
               type="button"

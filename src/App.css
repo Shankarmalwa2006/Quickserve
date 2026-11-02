@@ -1,35 +1,41 @@
 /* =========================================
    QUICKSERVE — COMPLETE RESPONSIVE STYLES
 ========================================= */
-
 :root,
 [data-theme="light"] {
-  color-scheme: light;
 
-  --bg: #ffffff;
-  --bg-secondary: #f8f9fd;
-  --surface: #ffffff;
-  --surface-hover: #f4f3ff;
+  /* Backgrounds */
+  --bg: #F7F4ED;
+  --bg-secondary: #EAEFE7;
+  --surface: #FFFFFF;
+  --surface-hover: #F0F3EC;
 
-  --text: #17152b;
-  --text-secondary: #5e6075;
-  --text-muted: #85869a;
+  /* Text */
+  --text: #26332D;
+  --text-secondary: #66756B;
+  --text-muted: #929D94;
 
-  --primary: #2563eb;
-  --primary-hover: #5032d0;
-  --primary-soft: #f0edff;
-  --primary-border: #ded6ff;
+  /* Forest green */
+  --primary: #245B4A;
+  --primary-hover: #194737;
+  --primary-soft: #E3ECE5;
+  --primary-border: #C6D7C9;
 
-  --border: #e8e8f0;
-  --shadow: 0 10px 35px rgba(37, 28, 80, 0.07);
-  --shadow-hover: 0 18px 45px rgba(37, 28, 80, 0.12);
+  /* Borders and shadows */
+  --border: #E2E5DC;
+  --shadow: 0 10px 35px rgba(38, 51, 45, 0.07);
+  --shadow-hover: 0 18px 45px rgba(38, 51, 45, 0.13);
 
-  --hero-bg: #f8f7ff;
-  --footer-bg: #17152b;
+  /* Sections */
+  --hero-bg: #EAEFE7;
+  --footer-bg: #26332D;
 
-  --success: #16a36a;
-  --rating: #f5a623;
+  /* Accents */
+  --success: #39866B;
+  --rating: #D6A16B;
+  --accent: #C47A55;
 
+  /* Radius */
   --radius-sm: 10px;
   --radius-md: 16px;
   --radius-lg: 24px;
@@ -38,29 +44,29 @@
 [data-theme="dark"] {
   color-scheme: dark;
 
-  --bg: #0c1020;
-  --bg-secondary: #11182a;
-  --surface: #171f33;
-  --surface-hover: #222a43;
+  --bg: #182A29;
+  --bg-secondary: #203634;
+  --surface: #29413E;
+  --surface-hover: #34514C;
 
-  --text: #f4f3ff;
-  --text-secondary: #b4bad0;
-  --text-muted: #8e96b0;
+  --text: #F5F1E8;
+  --text-secondary: #C0D0C8;
+  --text-muted: #91A69D;
 
-  --primary: #a18aff;
-  --primary-hover: #b8a7ff;
-  --primary-soft: #292343;
-  --primary-border: #423767;
+  --primary: #75B8A7;
+  --primary-hover: #91CCBA;
+  --primary-soft: #294C45;
+  --primary-border: #426C60;
 
-  --border: #2a344a;
+  --border: #3B5750;
   --shadow: 0 10px 35px rgba(0, 0, 0, 0.18);
   --shadow-hover: 0 18px 45px rgba(0, 0, 0, 0.3);
 
-  --hero-bg: #11162a;
-  --footer-bg: #080b15;
+  --hero-bg: #203634;
+  --footer-bg: #122321;
 
-  --success: #4adea0;
-  --rating: #ffc65c;
+  --success: #80C9A8;
+  --rating: #E5BB78;
 }
 
 /* RESET */
@@ -291,13 +297,13 @@ svg {
 .button-primary {
   background: var(--primary);
   color: #ffffff;
-  box-shadow: 0 5px 15px rgba(101, 70, 232, 0.18);
+  box-shadow: 0 5px 15px rgba(36, 91, 74, 0.16);
 }
 
 .button-primary:hover {
   background: var(--primary-hover);
   color: #ffffff;
-  box-shadow: 0 8px 20px rgba(101, 70, 232, 0.25);
+  box-shadow: 0 8px 20px rgba(36, 91, 74, 0.24);
 }
 
 .nav-book {
@@ -551,8 +557,9 @@ svg {
 
   background: radial-gradient(
     circle,
-    rgba(125, 99, 255, 0.18),
-    rgba(125, 99, 255, 0.02) 70%
+    rgba(36, 91, 74, 0.16),
+    rgba(36, 91, 74, 0.04) 55%,
+    transparent 72%
   );
 
   border-radius: 50%;
@@ -605,7 +612,7 @@ svg {
   height: 48px;
   margin-top: 32px;
 
-  background: #d8d1ff;
+  background: #DCE7DC;
   border: 4px solid var(--primary);
   border-radius: 7px;
 }
@@ -3599,4 +3606,103 @@ svg {
   font-weight: 600;
   cursor: pointer;
   white-space: nowrap;
+}
+
+/* =========================================
+   QUICK SERVE - AUTH NAVBAR BUTTONS
+========================================= */
+
+.auth-nav-actions {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+/* Greeting / Login */
+
+.auth-nav-login {
+  min-height: 42px;
+  padding: 0 16px;
+
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+
+  background: var(--primary-soft);
+  color: var(--primary);
+
+  border: 1px solid var(--primary-border);
+  border-radius: 11px;
+
+  font-size: 13px;
+  font-weight: 700;
+  white-space: nowrap;
+  cursor: pointer;
+  text-decoration: none;
+
+  transition: 0.2s ease;
+}
+
+.auth-nav-login:hover {
+  background: var(--primary);
+  color: #ffffff;
+}
+
+/* My Bookings */
+
+.my-bookings-link {
+  min-height: 42px;
+  padding: 0 16px;
+
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+
+  background: var(--primary);
+  color: #ffffff;
+
+  border: 1px solid var(--primary);
+  border-radius: 11px;
+
+  font-size: 13px;
+  font-weight: 700;
+  white-space: nowrap;
+  text-decoration: none;
+
+  transition: 0.2s ease;
+}
+
+.my-bookings-link:hover {
+  background: var(--primary-hover);
+  border-color: var(--primary-hover);
+  transform: translateY(-2px);
+}
+
+/* Logout / Sign Up */
+
+.auth-nav-signup {
+  min-height: 42px;
+  padding: 0 16px;
+
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+
+  background: var(--accent);
+  color: #ffffff;
+
+  border: 1px solid var(--accent);
+  border-radius: 11px;
+
+  font-size: 13px;
+  font-weight: 700;
+  white-space: nowrap;
+  cursor: pointer;
+
+  transition: 0.2s ease;
+}
+
+.auth-nav-signup:hover {
+  filter: brightness(0.92);
+  transform: translateY(-2px);
 }
