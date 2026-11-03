@@ -14,6 +14,7 @@ import {
 } from "lucide-react";
 
 import "./ProviderDashboard.css";
+import "./ProviderServices.css";
 
 const ProviderDashboard = ({ onLogout }) => {
   const stats = [
@@ -54,6 +55,14 @@ const ProviderDashboard = ({ onLogout }) => {
             Overview
           </a>
 
+          <a href="/provider/my-services">
+  My Services
+</a>
+
+            <a href="/provider/add-service">
+            Add Service
+            </a>
+
           <a href="/">
           <Home size={19} />
           Home
@@ -69,6 +78,7 @@ const ProviderDashboard = ({ onLogout }) => {
             My Profile
           </a>
         </nav>
+    
 
         <button
           className="provider-logout"
@@ -77,6 +87,9 @@ const ProviderDashboard = ({ onLogout }) => {
           <LogOut size={19} />
           Logout
           </button>
+
+
+
       </aside>
 
       {/* MAIN CONTENT */}

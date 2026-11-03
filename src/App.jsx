@@ -40,6 +40,8 @@
    import { Routes, Route , Navigate} from "react-router-dom";
   import ProviderDashboard from "./pages/provider/ProviderDashboard.jsx";
     import { useNavigate } from "react-router-dom";
+    import AddService from "./pages/provider/AddService";
+    import MyServices from "./pages/provider/MyServices";
 
 
   
@@ -260,19 +262,20 @@ openAuth("login", "provider");
       address: formData.get("address")?.trim(),
       booking_date: formData.get("preferredDate"),
       booking_time: null,
+      provider_id: selectedProvider.id
     };
 
-    try {
-      setBookingMessage("Submitting your booking...");
+      try {
+        setBookingMessage("Submitting your booking...");
 
-      const response = await fetch("http://localhost:5000/api/bookings", {
-        method: "POST",
-          headers: {
-        "Content-Type": "application/json",
-        "Authorization": `Bearer ${localStorage.getItem("quickserve-token")}`,
-        },
-        body: JSON.stringify(bookingData),
-      });
+        const response = await fetch("http://localhost:5000/api/bookings", {
+          method: "POST",
+            headers: {
+          "Content-Type": "application/json",
+          "Authorization": `Bearer ${localStorage.getItem("quickserve-token")}`,
+          },
+          body: JSON.stringify(bookingData),
+        });
 
       const result = await response.json();
 
@@ -413,10 +416,12 @@ openAuth("login", "provider");
             path="/services"
             element={<Services onBook={lp} />}
             />
+
             <Route
             path="/my-bookings"
             element={<BookingHistory />}
             />
+
             <Route path="/history" element={<BookingHistory />} />
 
             console.log("CURRENT PATH:", window.location.pathname);
@@ -425,6 +430,16 @@ openAuth("login", "provider");
                 path="/provider/dashboard"
                 element={<ProviderDashboard onLogout={handleLogout} />}
               />
+
+              <Route
+              path="/provider/add-service"
+              element={<AddService />}
+              />
+
+              <Route
+  path="/provider/my-services"
+  element={<MyServices />}
+/>
 
           </Routes>
 
