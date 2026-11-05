@@ -430,11 +430,10 @@ openAuth("login", "provider");
                 path="/provider/dashboard"
                 element={<ProviderDashboard onLogout={handleLogout} />}
               />
-
-              <Route
-              path="/provider/add-service"
-              element={<AddService />}
-              />
+<Route
+  path="/provider/add-service"
+  element={<AddService onLogout={handleLogout} />}
+/>
 
               <Route
   path="/provider/my-services"

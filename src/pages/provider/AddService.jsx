@@ -1,8 +1,9 @@
 
 import React, { useState } from "react";
 import "./ProviderServices.css";
+import ProviderLayout from "../../Components/provider/ProviderLayout";
 
-const AddService = () => {
+const AddService = ({ onLogout }) => {
   const [formData, setFormData] = useState({
     service_name: "",
     category: "",
@@ -68,6 +69,7 @@ const AddService = () => {
   };
 
   return (
+      <ProviderLayout onLogout={onLogout}>
     <div className="add-service-page">
       <h1>Add New Service</h1>
       <p>Showcase your services on QuickServe.</p>
@@ -142,6 +144,7 @@ const AddService = () => {
   </button>
 </form>
     </div>
+    </ProviderLayout>
   );
 };
 

@@ -1,8 +1,11 @@
 
 import React, { useEffect, useState } from "react";
+
+import ProviderLayout from "../../Components/provider/ProviderLayout";
+
 import "./ProviderServices.css";
 
-const MyServices = () => {
+const AddService = ({ onLogout }) => {
   const [services, setServices] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
@@ -72,6 +75,7 @@ const MyServices = () => {
       );
 
       alert("Service deleted successfully!");
+
     } catch (err) {
       alert(err.message);
     } finally {
@@ -79,40 +83,58 @@ const MyServices = () => {
     }
   };
 
-  if (loading) return <h2>Loading your services...</h2>;
-
-  if (error) return <p>{error}</p>;
-
   return (
-    <div className="my-services-page">
-      <h1>My Services</h1>
-      <p>Manage all the services you provide on QuickServe.</p>
+    <ProviderLayout onLogout={onLogout}>
+      <div className="my-services-page">
 
-      {services.length === 0 ? (
-        <p>You haven't added any services yet.</p>
-      ) : (
-        <div className="services-grid">
-          {services.map((service) => (
-            <div className="service-card" key={service.id}>
-              <h3>{service.service_name}</h3>
-              <p>{service.description}</p>
-              <p>Category: {service.category}</p>
-              <h4>₹{service.price}</h4>
-              <p>Area: {service.service_area}</p>
-              <p>Status: {service.status}</p>
+        <h1>My Services</h1>
 
-              <button
-                onClick={() => handleDelete(service.id)}
-                disabled={deletingId === service.id}
-              >
-                {deletingId === service.id ? "Deleting..." : "Delete Service"}
-              </button>
-            </div>
-          ))}
-        </div>
-      )}
-    </div>
+        <p>Manage all the services you provide on QuickServe.</p>
+
+        {loading ? (
+          <h2>Loading your services...</h2>
+        ) : error ? (
+          <p>{error}</p>
+        ) : services.length === 0 ? (
+          <p>You haven't added any services yet.</p>
+        ) : (
+
+          <div className="services-grid">
+
+            {services.map((service) => (
+              <div className="service-card" key={service.id}>
+
+                <h3>{service.service_name}</h3>
+
+                <p>{service.description}</p>
+
+                <p>Category: {service.category}</p>
+
+                <h4>₹{service.price}</h4>
+
+                <p>Area: {service.service_area}</p>
+
+                <p>Status: {service.status}</p>
+
+                <button
+                  onClick={() => handleDelete(service.id)}
+                  disabled={deletingId === service.id}
+                >
+                  {deletingId === service.id
+                    ? "Deleting..."
+                    : "Delete Service"}
+                </button>
+
+              </div>
+            ))}
+
+          </div>
+        )}
+
+      </div>
+
+    </ProviderLayout>
   );
 };
 
-export default MyServices;
+export default AddService;
