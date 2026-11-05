@@ -1,0 +1,128 @@
+
+.provider-bookings-page {
+  padding: 32px;
+  color: var(--text-primary);
+  min-height: 100%;
+}
+
+.bookings-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 28px;
+  flex-wrap: wrap;
+  gap: 15px;
+}
+
+.bookings-header h1 {
+  font-size: 28px;
+  font-weight: 700;
+  margin-bottom: 8px;
+}
+
+.bookings-header p {
+  color: var(--text-secondary);
+  font-size: 14px;
+}
+
+.booking-count {
+  background: #e5eee5;
+  color: #24543d;
+  padding: 10px 16px;
+  border-radius: 12px;
+  font-weight: 600;
+}
+
+.empty-bookings {
+  background: var(--card-bg, #ffffff);
+  border: 1px solid var(--border-color, #e5e5e5);
+  border-radius: 18px;
+  padding: 55px 25px;
+  text-align: center;
+  margin-top: 20px;
+}
+
+.empty-bookings h3 {
+  font-size: 20px;
+  margin-bottom: 10px;
+}
+
+.empty-bookings p {
+  color: var(--text-secondary);
+  font-size: 14px;
+}
+
+.bookings-list {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 20px;
+}
+
+.booking-card {
+  background: var(--card-bg, #ffffff);
+  border: 1px solid var(--border-color, #e5e5e5);
+  border-radius: 16px;
+  padding: 22px;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.booking-card:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.07);
+}
+
+.booking-card h3 {
+  font-size: 18px;
+  margin-bottom: 16px;
+  font-weight: 700;
+}
+
+.booking-card p {
+  font-size: 14px;
+  margin: 11px 0;
+  color: var(--text-secondary);
+  overflow-wrap: anywhere;
+}
+
+.booking-card strong {
+  color: var(--text-primary);
+}
+
+@media (max-width: 600px) {
+  .provider-bookings-page {
+    padding: 20px 15px;
+  }
+
+  .bookings-header h1 {
+    font-size: 23px;
+  }
+}
+.booking-actions {
+  margin-top: 18px;
+  padding-top: 15px;
+  border-top: 1px solid var(--border);
+}
+
+.booking-actions button {
+  background: #244b3b;
+  color: white;
+  border: none;
+  padding: 10px 16px;
+  border-radius: 9px;
+  cursor: pointer;
+  font-weight: 600;
+}
+
+.booking-actions button:hover {
+  background: #183629;
+}
+
+.status-completed {
+  color: #27834e;
+  font-weight: 700;
+}
+
+.status-cancelled {
+  color: #c34b4b;
+  font-weight: 700;
+}

@@ -42,7 +42,7 @@
     import { useNavigate } from "react-router-dom";
     import AddService from "./pages/provider/AddService";
     import MyServices from "./pages/provider/MyServices";
-
+import ProviderBookings from "./pages/provider/ProviderBookings";
 
   
   
@@ -430,15 +430,20 @@ openAuth("login", "provider");
                 path="/provider/dashboard"
                 element={<ProviderDashboard onLogout={handleLogout} />}
               />
-<Route
-  path="/provider/add-service"
-  element={<AddService onLogout={handleLogout} />}
-/>
+                <Route
+                path="/provider/add-service"
+                element={<AddService onLogout={handleLogout} />}
+                />
+
+                <Route
+                path="/provider/my-services"
+                element={<MyServices />}
+                />
 
               <Route
-  path="/provider/my-services"
-  element={<MyServices />}
-/>
+              path="/provider/bookings"
+              element={<ProviderBookings onLogout={handleLogout} />}
+              />
 
           </Routes>
 

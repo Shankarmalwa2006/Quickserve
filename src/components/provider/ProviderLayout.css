@@ -13,6 +13,32 @@
   font-family: Inter, sans-serif;
 }
 
+
+/* DARK THEME */
+
+.provider-layout.dark {
+  --forest: #244b3b;
+  --forest-dark: #10291f;
+  --ivory: #14251d;
+  --muted: #a4b5a9;
+  --border: #30483b;
+
+  color: #edf4ee;
+}
+
+/* LIGHT THEME */
+
+.provider-layout.light {
+  --forest: #244b3b;
+  --forest-dark: #183629;
+  --ivory: #f7f6ef;
+  --muted: #7b857e;
+  --border: #e8e9e1;
+
+  color: #26372f;
+}
+
+
 /* SIDEBAR */
 
 .provider-sidebar {

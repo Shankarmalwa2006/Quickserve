@@ -44,31 +44,37 @@
 [data-theme="dark"] {
   color-scheme: dark;
 
+  /* Backgrounds */
   --bg: #182A29;
   --bg-secondary: #203634;
   --surface: #29413E;
   --surface-hover: #34514C;
 
+  /* Text */
   --text: #F5F1E8;
   --text-secondary: #C0D0C8;
   --text-muted: #91A69D;
 
+  /* Forest Green */
   --primary: #75B8A7;
   --primary-hover: #91CCBA;
   --primary-soft: #294C45;
   --primary-border: #426C60;
 
+  /* Borders and Shadows */
   --border: #3B5750;
   --shadow: 0 10px 35px rgba(0, 0, 0, 0.18);
   --shadow-hover: 0 18px 45px rgba(0, 0, 0, 0.3);
 
+  /* Sections */
   --hero-bg: #203634;
   --footer-bg: #122321;
 
+  /* Accents */
   --success: #80C9A8;
   --rating: #E5BB78;
+  --accent: #D49A79;
 }
-
 /* RESET */
 
 * {
