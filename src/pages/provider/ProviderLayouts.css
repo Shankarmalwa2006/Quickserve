@@ -1,0 +1,147 @@
+
+.provider-layout {
+  --forest: #244b3b;
+  --forest-dark: #183629;
+  --ivory: #f7f6ef;
+  --muted: #7b857e;
+  --border: #e8e9e1;
+
+  display: flex;
+  min-height: 100vh;
+  background: var(--ivory);
+  color: #26372f;
+  font-family: Inter, sans-serif;
+}
+
+/* SIDEBAR */
+
+.provider-sidebar {
+  width: 250px;
+  min-height: 100vh;
+  background: var(--forest-dark);
+  color: white;
+  padding: 30px 20px;
+  display: flex;
+  flex-direction: column;
+  flex-shrink: 0;
+}
+
+.provider-logo {
+  font-size: 25px;
+  font-weight: 800;
+  margin: 0 0 55px 8px;
+  letter-spacing: -1px;
+}
+
+.provider-logo span {
+  color: #b7c99b;
+}
+
+.sidebar-label {
+  font-size: 11px;
+  letter-spacing: 1.5px;
+  color: #9cac9f;
+  font-weight: 700;
+  margin: 0 0 16px 10px;
+}
+
+.provider-nav {
+  display: flex;
+  flex-direction: column;
+  gap: 9px;
+}
+
+.provider-nav a,
+.provider-logout {
+  display: flex;
+  align-items: center;
+  gap: 13px;
+  padding: 13px 14px;
+  color: #d5dfd7;
+  text-decoration: none;
+  border-radius: 10px;
+  font-size: 14px;
+  font-weight: 500;
+  transition: 0.2s ease;
+}
+
+.provider-nav a:hover,
+.provider-nav a.active {
+  background: #345d49;
+  color: white;
+}
+
+.provider-nav a.active {
+  box-shadow: inset 3px 0 #c5d5a7;
+}
+
+.provider-logout {
+  margin-top: auto;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  width: 100%;
+  font: inherit;
+}
+
+.provider-logout:hover {
+  background: #345d49;
+  color: white;
+}
+
+/* MAIN CONTENT */
+
+.provider-main {
+  flex: 1;
+  min-width: 0;
+  padding: 38px 45px;
+}
+
+/* RESPONSIVE */
+
+@media (max-width: 1100px) {
+  .provider-main {
+    padding: 30px 25px;
+  }
+}
+
+@media (max-width: 700px) {
+  .provider-layout {
+    flex-direction: column;
+  }
+
+  .provider-sidebar {
+    width: 100%;
+    min-height: auto;
+    padding: 18px;
+  }
+
+  .provider-logo {
+    margin: 0 0 18px 5px;
+  }
+
+  .sidebar-label {
+    display: none;
+  }
+
+  .provider-nav {
+    flex-direction: row;
+    flex-wrap: wrap;
+  }
+
+  .provider-nav a {
+    flex: 1;
+    justify-content: center;
+    padding: 11px 8px;
+    font-size: 12px;
+  }
+
+  .provider-logout {
+    margin-top: 12px;
+    justify-content: center;
+  }
+
+  .provider-main {
+    padding: 25px 17px;
+  }
+}
