@@ -8,6 +8,7 @@ const ProviderBookings = ({ onLogout }) => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
 
+  // FETCH PROVIDER BOOKINGS
   const fetchBookings = async () => {
     try {
       const token = localStorage.getItem("quickserve-token");
@@ -20,33 +21,6 @@ const ProviderBookings = ({ onLogout }) => {
           },
         }
       );
-const updateBookingStatus = async (bookingId, status) => {
-  try {
-    const token = localStorage.getItem("quickserve-token");
-
-    const response = await fetch(
-      `http://localhost:5000/api/bookings/${bookingId}/status`,
-      {
-        method: "PATCH",
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${token}`,
-        },
-        body: JSON.stringify({ status }),
-      }
-    );
-
-    const data = await response.json();
-
-    if (!response.ok) {
-      throw new Error(data.message || "Status update failed");
-    }
-
-    await fetchBookings();
-  } catch (err) {
-    alert(err.message);
-  }
-};
 
       const data = await response.json();
 
@@ -62,6 +36,36 @@ const updateBookingStatus = async (bookingId, status) => {
     }
   };
 
+  // UPDATE BOOKING STATUS
+  const updateBookingStatus = async (bookingId, status) => {
+    try {
+      const token = localStorage.getItem("quickserve-token");
+
+      const response = await fetch(
+        `http://localhost:5000/api/bookings/${bookingId}/status`,
+        {
+          method: "PATCH",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${token}`,
+          },
+          body: JSON.stringify({ status }),
+        }
+      );
+
+      const data = await response.json();
+
+      if (!response.ok) {
+        throw new Error(data.message || "Status update failed");
+      }
+
+      await fetchBookings();
+    } catch (err) {
+      alert(err.message);
+    }
+  };
+
+  // LOAD BOOKINGS ON PAGE MOUNT
   useEffect(() => {
     fetchBookings();
   }, []);
@@ -103,59 +107,48 @@ const updateBookingStatus = async (bookingId, status) => {
               <div className="booking-card" key={booking.id}>
                 <h3>{booking.service_name}</h3>
 
-                <p>
-                  <strong>Customer:</strong> {booking.customer_name}
-                </p>
+                <p><strong>Customer:</strong> {booking.customer_name}</p>
+                <p><strong>Phone:</strong> {booking.phone}</p>
+                <p><strong>Address:</strong> {booking.address}</p>
+                <p><strong>Date:</strong> {booking.booking_date}</p>
+                <p><strong>Time:</strong> {booking.booking_time}</p>
+                <p><strong>Status:</strong> {booking.status}</p>
 
-                <p>
-                  <strong>Phone:</strong> {booking.phone}
-                </p>
+                <div className="booking-actions">
 
-                <p>
-                  <strong>Address:</strong> {booking.address}
-                </p>
+                  {booking.status === "Pending" && (
+                    <button
+                      onClick={() =>
+                        updateBookingStatus(booking.id, "Confirmed")
+                      }
+                    >
+                      Accept Booking
+                    </button>
+                  )}
 
-                <p>
-                  <strong>Date:</strong> {booking.booking_date}
-                </p>
+                  {booking.status === "Confirmed" && (
+                    <button
+                      onClick={() =>
+                        updateBookingStatus(booking.id, "Completed")
+                      }
+                    >
+                      Mark as Completed
+                    </button>
+                  )}
 
-                <p>
-                  <strong>Time:</strong> {booking.booking_time}
-                </p>
+                  {booking.status === "Completed" && (
+                    <span className="status-completed">
+                      Completed
+                    </span>
+                  )}
 
-                <p>
-                  <strong>Status:</strong> {booking.status}
-                </p>
-                  <div className="booking-actions">
-  {booking.status === "Pending" && (
-    <button
-      onClick={() =>
-        updateBookingStatus(booking.id, "Confirmed")
-      }
-    >
-      Accept Booking
-    </button>
-  )}
+                  {booking.status === "Cancelled" && (
+                    <span className="status-cancelled">
+                      Cancelled
+                    </span>
+                  )}
 
-  {booking.status === "Confirmed" && (
-    <button
-      onClick={() =>
-        updateBookingStatus(booking.id, "Completed")
-      }
-    >
-      Mark as Completed
-    </button>
-  )}
-
-  {booking.status === "Completed" && (
-    <span className="status-completed">Completed</span>
-  )}
-
-  {booking.status === "Cancelled" && (
-    <span className="status-cancelled">Cancelled</span>
-  )}
-</div>
-
+                </div>
               </div>
             ))}
           </div>

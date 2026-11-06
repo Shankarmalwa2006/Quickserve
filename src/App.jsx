@@ -61,6 +61,9 @@ import ProviderBookings from "./pages/provider/ProviderBookings";
     const [location, setLocation] = useState("");
     const [selectedService, setSelectedService] = useState(null);
     const [bookingMessage, setBookingMessage] = useState("");
+    const [services, setServices] = useState([]);
+    const [servicesLoading, setServicesLoading] = useState(true);
+    const [servicesError, setServicesError] = useState("");
     
     
       // Provider details modal state
@@ -107,6 +110,50 @@ import ProviderBookings from "./pages/provider/ProviderBookings";
     };
 
 
+    useEffect(() => {
+  const fetchServices = async () => {
+    try {
+      const response = await fetch(
+        "http://localhost:5000/api/services"
+      );
+
+      const data = await response.json();
+
+      if (!response.ok || !data.success) {
+        throw new Error(data.message || "Failed to load services");
+      }
+
+      const formattedServices = data.services.map((service) => ({
+        ...service,
+        name: service.service_name,
+        provider: {
+          name: service.provider_name || "Service Professional",
+        },
+        availableAreas: service.service_area
+          ? [service.service_area]
+          : [],
+        rating: 0,
+        reviews: 0,
+        duration: "To be confirmed",
+        color: "blue",
+        popular: false,
+        icon:
+          categories.find(
+            (category) => category.name === service.category
+          )?.icon || Wrench,
+      }));
+
+      setServices(formattedServices);
+    } catch (error) {
+      console.error("Services fetch error:", error);
+      setServicesError(error.message);
+    } finally {
+      setServicesLoading(false);
+    }
+  };
+
+  fetchServices();
+}, []);
 
     // Open authentication modal
   const openAuth = (mode = "login", role = "customer") => {
@@ -209,7 +256,7 @@ openAuth("login", "provider");
     const query = searchQuery.trim().toLowerCase();
     const currentLocation = location.trim().toLowerCase();
 
-    return initialServices.filter((service) => {
+   return services.filter((service) => {
       const matchesCategory =
         activeCategory === "All Services" ||
         service.category === activeCategory;
@@ -230,7 +277,7 @@ openAuth("login", "provider");
 
       return matchesCategory && matchesSearch && matchesLocation;
     });
-  }, [activeCategory, searchQuery, location]);
+}, [services, activeCategory, searchQuery, location]);
 
     const handleSearch = (event) => {
       event.preventDefault();
@@ -239,10 +286,12 @@ openAuth("login", "provider");
       });
     };
 
-    const lp = (service) => {
-      setSelectedService(service);
-      setBookingMessage("");
-    };
+   const lp = (service) => {
+  console.log("Selected service:", service);
+
+  setSelectedService(service);
+  setBookingMessage("");
+};
 
     const closeBooking = () => {
       setSelectedService(null);
@@ -262,7 +311,7 @@ openAuth("login", "provider");
       address: formData.get("address")?.trim(),
       booking_date: formData.get("preferredDate"),
       booking_time: null,
-      provider_id: selectedProvider.id
+    provider_id: selectedService?.provider_id
     };
 
       try {
@@ -624,6 +673,7 @@ openAuth("login", "provider");
                       const service = selectedProvider;
 
                       closeProviderDetails();
+                      
                       handleBooking(service);
                     }}
                   >
@@ -742,10 +792,7 @@ openAuth("login", "provider");
                   Submit Booking Request <ArrowRight size={18} />
                 </button>
 
-                <p className="booking-note">
-                  This demo does not confirm a real appointment. Backend
-                  integration is required to save bookings.
-                </p>
+                
               </form>
             </div>
           </div>

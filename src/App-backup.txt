@@ -256,13 +256,70 @@ const filteredServices = useMemo(() => {
     setBookingMessage("");
   };
 
-  const submitBooking = (event) => {
-    event.preventDefault();
+ 
+const submitBooking = async (event) => {
+  event.preventDefault();
 
-    setBookingMessage(
-      "Booking form submitted locally! Connect your backend to save and confirm real bookings."
+  try {
+    const token = localStorage.getItem("quickserve-token");
+
+    if (!token) {
+      throw new Error("Please login before booking.");
+    }
+
+    if (!selectedService?.provider_id) {
+      throw new Error("Provider information is missing for this service.");
+    }
+
+    const submitBooking = async (event) => {
+  event.preventDefault();
+
+  console.log("BOOKING SUBMIT TRIGGERED!");
+  console.log("Selected Service:", selectedService);
+  console.log("Provider ID:", selectedService?.provider_id);
+
+  // Keep the remaining submission code below
+
+    const formData = new FormData(event.currentTarget);
+
+    const bookingData = {
+      customer_name: formData.get("customerName"),
+      phone: formData.get("phone"),
+      service_name: selectedService.name,
+      address: formData.get("address"),
+      booking_date: formData.get("preferredDate"),
+      booking_time: null,
+      provider_id: selectedService.provider_id,
+    };
+
+    const response = await fetch(
+      "http://localhost:5000/api/bookings",
+      {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
+        body: JSON.stringify(bookingData),
+      }
     );
-  };
+
+    const data = await response.json();
+
+    if (!response.ok) {
+      throw new Error(data.message || "Booking failed.");
+    }
+
+    setBookingMessage("Booking submitted successfully!");
+
+    event.currentTarget.reset();
+
+  } catch (error) {
+    setBookingMessage(error.message);
+
+  }
+  
+};
 
   const handleLocation = () => {
   if (!navigator.geolocation) {
